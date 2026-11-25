@@ -99,6 +99,11 @@ io.on("connection", (socket) => {
         socket.data.user = null;
     });
 
+    // Gui tin nhan.
+    socket.on("send-message", ({ roomCode, message }) => {
+        io.to(roomCode).emit("new-message", message);
+    });
+
     // Tự chạy khi đóng tab, mất mạng, tắt trình duyệt...
     socket.on("disconnecting", (reason) => {
         const roomCode = socket.data.roomCode;
